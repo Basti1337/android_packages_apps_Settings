@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/temasek_settings_title"
+    xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
+
+    <PreferenceScreen
+        android:key="notification_drawer"
+        android:fragment="com.android.settings.temasek.NotificationDrawer"
+        android:title="@string/notification_drawer_title" />
+
+</PreferenceScreen>
