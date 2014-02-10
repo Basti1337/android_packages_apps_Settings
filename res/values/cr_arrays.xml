@@ -250,7 +250,6 @@
         <item>2</item>
     </string-array>
 
-<<<<<<< HEAD
     <!-- Notification reminder flip interval -->
     <string-array name="noti_reminder_interval_entries">
         <item>@string/noti_reminder_interval_1s</item>
