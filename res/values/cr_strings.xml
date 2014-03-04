@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- About phone screen, temasek version -->
+    <string name="temasek_version_title">Temasek unofficial version</string>
+    <string name="temasek_version_default">Unknown</string>
+
+</resources>
