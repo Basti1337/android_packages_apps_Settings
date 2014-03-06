@@ -291,6 +291,7 @@
         <item>2</item>
     </string-array>
 
+<<<<<<< HEAD
     <!-- Notification reminder flip interval -->
     <string-array name="noti_reminder_interval_entries">
         <item>@string/noti_reminder_interval_1s</item>
@@ -345,6 +346,19 @@
     </string-array>
 
     <string-array name="clock_font_style_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <!-- Smart pulldown -->
+    <string-array name="smart_pulldown_entries" translatable="false">
+        <item>@string/smart_pulldown_off</item>
+        <item>@string/smart_pulldown_dismissable</item>
+        <item>@string/smart_pulldown_persistent</item>
+    </string-array>
+
+    <string-array name="smart_pulldown_values" translatable="false">
         <item>0</item>
         <item>1</item>
         <item>2</item>
