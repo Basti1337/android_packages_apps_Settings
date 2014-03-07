@@ -69,14 +69,14 @@ public class SystemUiSettings extends SettingsPreferenceFragment  implements
                 mExpandedDesktopPref.setOnPreferenceChangeListener(this);
                 mExpandedDesktopPref.setValue(String.valueOf(expandedDesktopValue));
                 updateExpandedDesktop(expandedDesktopValue);
-                prefScreen.removePreference(mExpandedDesktopNoNavbarPref);
+                // prefScreen.removePreference(mExpandedDesktopNoNavbarPref);
             } else {
                 // Hide no-op "Status bar visible" expanded desktop mode
                 mExpandedDesktopNoNavbarPref.setOnPreferenceChangeListener(this);
                 mExpandedDesktopNoNavbarPref.setChecked(expandedDesktopValue > 0);
                 prefScreen.removePreference(mExpandedDesktopPref);
                 // Hide navigation bar category
-                prefScreen.removePreference(findPreference(CATEGORY_NAVBAR));
+                // prefScreen.removePreference(findPreference(CATEGORY_NAVBAR));
             }
         } catch (RemoteException e) {
             Log.e(TAG, "Error getting navigation bar status");
