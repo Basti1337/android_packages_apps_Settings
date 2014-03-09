@@ -44,8 +44,8 @@ public class NotificationDrawerQsSettings extends SettingsPreferenceFragment
 
     public static final String TAG = "NotificationDrawerSettings";
 
-    private static final String PREF_NOTIFICATION_HIDE_LABELS =
-            "notification_hide_labels";
+    private static final String PREF_NOTIFICATION_HIDE_CARRIER =
+            "notification_hide_carrier";
     private static final String PREF_NOTIFICATION_ALPHA =
             "notification_alpha";
     private static final String PREF_NOTI_REMINDER_SOUND =
@@ -67,7 +67,7 @@ public class NotificationDrawerQsSettings extends SettingsPreferenceFragment
     private static final String PRE_SWIPE_TO_SWITCH_SCREEN_DETECTION =
             "full_swipe_to_switch_detection";
 
-    ListPreference mHideLabels;
+    CheckBoxPreference mHideCarrier;
     SeekBarPreference mNotificationAlpha;
     CheckBoxPreference mReminder;
     ListPreference mReminderMode;
@@ -85,23 +85,21 @@ public class NotificationDrawerQsSettings extends SettingsPreferenceFragment
 
         PreferenceScreen prefs = getPreferenceScreen();
 
-        mHideLabels = (ListPreference) findPreference(PREF_NOTIFICATION_HIDE_LABELS);
-        int hideCarrier = Settings.System.getInt(getContentResolver(),
-                Settings.System.NOTIFICATION_HIDE_LABELS, 0);
-        mHideLabels.setValue(String.valueOf(hideCarrier));
-        mHideLabels.setOnPreferenceChangeListener(this);
-        updateHideNotificationLabelsSummary(hideCarrier);
+        mHideCarrier = (CheckBoxPreference) findPreference(PREF_NOTIFICATION_HIDE_CARRIER);
+        boolean hideCarrier = Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.NOTIFICATION_HIDE_CARRIER, 0) == 1;
+        mHideCarrier.setChecked(hideCarrier);
+        mHideCarrier.setOnPreferenceChangeListener(this);
 
         PackageManager pm = getPackageManager();
         boolean isMobileData = pm.hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
 
-        /* Tablet case in handled in PhoneStatusBar
         if (!DeviceUtils.isPhone(getActivity())
             || !DeviceUtils.deviceSupportsMobileData(getActivity())) {
             // Nothing for tablets, large screen devices and non mobile devices which doesn't show
             // information in notification drawer.....remove options
             prefs.removePreference(mHideCarrier);
-        }*/
+        }
 
         float transparency;
         try{
@@ -204,11 +202,10 @@ public class NotificationDrawerQsSettings extends SettingsPreferenceFragment
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference == mHideLabels) {
-            int hideLabels = Integer.valueOf((String) newValue);
-            Settings.System.putInt(getContentResolver(), Settings.System.NOTIFICATION_HIDE_LABELS,
-                    hideLabels);
-            updateHideNotificationLabelsSummary(hideLabels);
+        if (preference == mHideCarrier) {
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.NOTIFICATION_HIDE_CARRIER,
+                    (Boolean) newValue ? 1 : 0);
             return true;
         } else if (preference == mNotificationAlpha) {
             float valNav = Float.parseFloat((String) newValue);
@@ -288,27 +285,6 @@ public class NotificationDrawerQsSettings extends SettingsPreferenceFragment
                     : R.string.smart_pulldown_dismissable);
             mSmartPulldown.setSummary(res.getString(R.string.smart_pulldown_summary, type));
         }
-    }
-
-    private void updateHideNotificationLabelsSummary(int value) {
-        Resources res = getResources();
-
-        StringBuilder text = new StringBuilder();
-
-        switch (value) {
-        case 1  : text.append(res.getString(R.string.notification_hide_labels_carrier));
-                break;
-        case 2  : text.append(res.getString(R.string.notification_hide_labels_wifi));
-                break;
-        case 3  : text.append(res.getString(R.string.notification_hide_labels_all));
-                break;
-        default : text.append(res.getString(R.string.notification_hide_labels_disable));
-                break;
-        }
-
-        text.append(" " + res.getString(R.string.notification_hide_labels_text));
-
-        mHideLabels.setSummary(text.toString());
     }
 
     private void updateReminderModeSummary(int value) {
